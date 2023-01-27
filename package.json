@@ -1,0 +1,23 @@
+{
+  "name": "slutprojekt-jsf",
+  "version": "1.0.0",
+  "description": "My finale project in JSF",
+  "scripts": {
+    "start": "parcel"
+  },
+  "source": "src/index.html",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hagwall86/Slutprojekt-JSF.git"
+  },
+  "author": "Hagge86",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hagwall86/Slutprojekt-JSF/issues"
+  },
+  "homepage": "https://github.com/Hagwall86/Slutprojekt-JSF#readme",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.8.3",
+    "parcel": "^2.8.3"
+  }
+}
