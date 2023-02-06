@@ -1,7 +1,10 @@
 
+const kn = document.querySelector("#n")!
+
 
 
 // interface countryTemplate { [key: string]: string | string[]; }
+
 
 
 //? Detta är mallen för den nya array
@@ -9,10 +12,10 @@
 interface countryTemplate {
     name: string,
     capital: string,
-    region: string,
+    // region: string,
     population: number,
-    area: number,
-    borders: string,
+    // area: number,
+    flag: string,
 }
 
 
@@ -24,23 +27,9 @@ const allNames = ""
 const allCapital = ""
 const container = document.querySelector('.theMain')!
 const countrySection = document.createElement('section')
-// const countryObj: {
-//     countryArr: CountryArr[],
-// } = {
-//     countryArr: [],
-// }
-// const countryTemplate = {
-//     name: "",
-//     capital: "",
-//     region: "",
-//     population: 0,
-//     area: 0,
-//     borders: "",
-// }
 
 let countryObj: {
     countryArr: countryTemplate[],
-
 
 } = {
     countryArr: []
@@ -56,27 +45,6 @@ async function getAllInfo () {
 
     // typa inte upp inkommand data utan gör om det och lägg i en ny array
 
-    // countryArr.push(...Object.keys(allData.name))
-    // countryArr.push(allData.name.common)
-
-
-
-    console.log(countryObj.countryArr)
-    // console.log(allData)
-    // const test1 = document.createElement('div')
-
-    // container.append(countrySection)
-    // countrySection.append(test1)
-    // // console.log(allData[0])
-
-
-    // console.log(countryArr)
-
-    //? Göra en if för att kolla om det är en array eller inte
-    // if (allData.name.common === []) {}
-
-
-
     //*Här sorterar jag namnen i bokstavsordning eftersom dom inte kommer i det från APIet
     //* tar in två namn och om den ena är större än den andre så byter dom plats.
     countryObj.countryArr.sort(function(a,b) {
@@ -85,19 +53,55 @@ async function getAllInfo () {
         return 0
     })
 
+    kn.addEventListener("click", (e) => {
+        console.clear()
+        randomCountry()
+    })
+
+    //* En loop som tar ut den datan jag vill spara och lägger till de i mitt Objekt.
+    for (let i = 0; i < allData.length; i++) {
+
+        const tempObj = {
+            name: allData[i].name.common,
+            capital: allData[i].capital,
+            population: allData[i].population,
+            flag: allData[i].flags.svg,
+        };
+        countryObj.countryArr.push(tempObj);
+    }
+
     //* Här skrivs det ut 10st random länder för att slippa ha alla länder direkt när man kommer in
     function randomCountry () {
-        for (let i = 0; i < 10; i++) {
-            //* Här ska data som jag vill ha ut från apiet läggas in i objektet
-            console.log(allData[i])
-            countryObj.countryArr.push(allData.name.comom)
-            countryObj.countryArr.push(allData.capital)
-            countryObj.countryArr.push(allData.region)
-            console.log(countryObj.countryArr)
+        const randomArr: string[] = [];
+        randomArr.push("nisse")
+
+        //* Här ska data som jag vill ha ut från apiet läggas in i objektet
+        for (let i = 0; i < 100; i++) {
             const random = (countryObj.countryArr[Math.floor(Math.random() * countryObj.countryArr.length)].name)
-            const card = document.createElement('div')
-            card.innerHTML = `${random}`
-            container.append(card)
+            if (random == randomArr[i]) {
+                console.log("Det togs bort");
+                return
+            }else {
+                randomArr.push(random)
+                console.log(randomArr[i]);
+                console.log(randomArr.length -1);
+
+
+
+                //* Här tars det värdet som kommer från random och letar upp namnet och tar ut dom andra sakerna man vill ha ut ifrån namnet. Samt lägger ut de i DOMen.
+                for (let j = 0; j < countryObj.countryArr.length; j++) {
+                    if (random === countryObj.countryArr[j].name) {
+                        // console.log(countryObj.countryArr[j].name)
+                        const card = document.createElement('div')
+                        const countryInfo = document.createElement('p')
+                        const flag = document.createElement('img')
+                        card.innerHTML = countryObj.countryArr[j].name
+                        countryInfo.innerHTML = countryObj.countryArr[j].capital
+                        flag.src = countryObj.countryArr[j].flag
+                        container.append(card, countryInfo, flag)
+                    }
+                }
+            }
         }
     }
     randomCountry()
@@ -107,6 +111,8 @@ getAllInfo()
 
 
 
+
+// console.log(countryObj.countryArr);
 
 
 // todo: Denna loopen tar fram alla länder
@@ -121,13 +127,7 @@ getAllInfo()
 
 //Lägga ut namnen på alla i en div
 //Lägga till flaggan
-
 //Visa upp 10 random länder på start
 //Dela upp i kontineter
-
-
-
-
-
 // Göra en sökfuntion som tar antinge stad eller land
 // en sökfuntion som tar upp vilka läner som gränsar till landet men som oxå skriver ut hela namnet inte förkortningen på de
