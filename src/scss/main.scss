@@ -1,0 +1,23 @@
+main {
+    // max-width: 80vw;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 1em;
+    margin: 0 auto;
+}
+
+div {
+
+
+    border: 3px solid red;
+    padding: 1em;
+    margin: 1em;
+}
+
+img {
+    min-height: 10em;
+    min-width: 30em;
+    border: 5px solid black;
+    margin: 0 auto;
+}
+

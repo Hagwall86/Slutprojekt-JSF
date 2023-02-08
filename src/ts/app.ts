@@ -3,39 +3,38 @@ const kn = document.querySelector("#n")!
 
 
 
+// länk till jordens flagga https://www.flagofplanetearth.com/
+//Url: https://images.squarespace-cdn.com/content/v1/5fa6b76b045ef433ae7b252e/1604765875569-MUAEJNXG2NL6E4VEORZ6/Flag_20x30.jpg
+
 // interface countryTemplate { [key: string]: string | string[]; }
-
-
 
 //? Detta är mallen för den nya array
 
 interface countryTemplate {
     name: string,
     capital: string,
-    // region: string,
     population: number,
-    // area: number,
     flag: string,
+    // region: string,
+    // area: number,
 }
-
-
 
 //* Hämta länk
 
 const allInfo = "https://restcountries.com/v3.1/all"
-const allNames = ""
+
+
+//? Detta ska vara söklänken som skickar in ett namn från en Lista? hmmmmmmmmm
+const allNames = "https://restcountries.com/v3.1/name/"
 const allCapital = ""
 const container = document.querySelector('.theMain')!
 const countrySection = document.createElement('section')
 
 let countryObj: {
     countryArr: countryTemplate[],
-
 } = {
     countryArr: []
-
 }
-
 
 
 //* Hämtar APIet samt min container i HTML
@@ -54,8 +53,10 @@ async function getAllInfo () {
     })
 
     kn.addEventListener("click", (e) => {
+        container.innerHTML = ""
         console.clear()
         randomCountry()
+
     })
 
     //* En loop som tar ut den datan jag vill spara och lägger till de i mitt Objekt.
@@ -73,20 +74,20 @@ async function getAllInfo () {
     //* Här skrivs det ut 10st random länder för att slippa ha alla länder direkt när man kommer in
     function randomCountry () {
         const randomArr: string[] = [];
-        randomArr.push("nisse")
+        // randomArr.push("nisse")
 
         //* Här ska data som jag vill ha ut från apiet läggas in i objektet
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 10; i++) {
             const random = (countryObj.countryArr[Math.floor(Math.random() * countryObj.countryArr.length)].name)
             if (random == randomArr[i]) {
                 console.log("Det togs bort");
-                return
+                i--
+                continue;
+
             }else {
                 randomArr.push(random)
-                console.log(randomArr[i]);
-                console.log(randomArr.length -1);
-
-
+                // console.log(randomArr[i]);
+                console.log(randomArr.length);
 
                 //* Här tars det värdet som kommer från random och letar upp namnet och tar ut dom andra sakerna man vill ha ut ifrån namnet. Samt lägger ut de i DOMen.
                 for (let j = 0; j < countryObj.countryArr.length; j++) {
@@ -95,10 +96,13 @@ async function getAllInfo () {
                         const card = document.createElement('div')
                         const countryInfo = document.createElement('p')
                         const flag = document.createElement('img')
-                        card.innerHTML = countryObj.countryArr[j].name
-                        countryInfo.innerHTML = countryObj.countryArr[j].capital
+
+                        countryInfo.innerHTML = `Name: ${countryObj.countryArr[j].name} <br/> ${countryObj.countryArr[j].capital}`
+                        // countryInfo.innerHTML = countryObj.countryArr[j].capital
                         flag.src = countryObj.countryArr[j].flag
-                        container.append(card, countryInfo, flag)
+
+                        container.append(card)
+                        card.append(flag, countryInfo)
                     }
                 }
             }
