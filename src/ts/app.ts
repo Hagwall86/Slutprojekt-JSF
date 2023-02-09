@@ -54,9 +54,9 @@ async function getAllInfo () {
 
     kn.addEventListener("click", (e) => {
         container.innerHTML = ""
+        
         console.clear()
         randomCountry()
-
     })
 
     //* En loop som tar ut den datan jag vill spara och lägger till de i mitt Objekt.
@@ -90,17 +90,16 @@ async function getAllInfo () {
                 console.log(randomArr.length);
 
                 //* Här tars det värdet som kommer från random och letar upp namnet och tar ut dom andra sakerna man vill ha ut ifrån namnet. Samt lägger ut de i DOMen.
-                for (let j = 0; j < countryObj.countryArr.length; j++) {
-                    if (random === countryObj.countryArr[j].name) {
+                for (let j = 0; j < randomArr.length; j++) {
+                    if (random === randomArr[j]) {
                         // console.log(countryObj.countryArr[j].name)
                         const card = document.createElement('div')
                         const countryInfo = document.createElement('p')
                         const flag = document.createElement('img')
 
-                        countryInfo.innerHTML = `Name: ${countryObj.countryArr[j].name} <br/> ${countryObj.countryArr[j].capital}`
+                        countryInfo.innerHTML = `Name: ${countryObj.countryArr[j].name} <br/> Capital: ${countryObj.countryArr[j].capital}`
                         // countryInfo.innerHTML = countryObj.countryArr[j].capital
                         flag.src = countryObj.countryArr[j].flag
-
                         container.append(card)
                         card.append(flag, countryInfo)
                     }
