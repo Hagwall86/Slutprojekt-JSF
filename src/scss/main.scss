@@ -12,10 +12,9 @@ div {
     display: flex;
     justify-content: center;
     border: 3px solid red;
-    margin: 0.1em;
     margin: .3em;
-    // padding: 0.3em;
-    // max-height: 30vw;
+    padding: 0.3em;
+    max-height: 30vw;
 }
 
 img {
@@ -29,5 +28,6 @@ img {
 p {
     margin: 0px;
     padding: .75em;
-    min-width: 5vw;
+    text-justify: auto;
+    // min-width: 2vw;
 }
