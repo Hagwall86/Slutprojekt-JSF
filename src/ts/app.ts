@@ -73,15 +73,26 @@ async function getAllInfo () {
 
     //* Här skrivs det ut 10st random länder för att slippa ha alla länder direkt när man kommer in
     function randomCountry () {
-        const randomArr = []
+        const randomArr: number[] = []
         for (let i = 0; i < 10; i++) {
             const random = (countryObj.countryArr[Math.floor(Math.random() * countryObj.countryArr.length)])
+            console.log(countryObj.countryArr.indexOf(random));
+            console.log(random.name);
 
-            randomArr.push(random)
+            randomArr.push(random[i])
 
-                console.log(random);
+            console.log(randomArr)
+            // use randomArr.indexOf för att inte använda samma länder
 
-                // console.log(tempArrObj);
+
+
+            // console.log(random[2].name)
+
+
+
+            // console.log(tempArrObj);
+
+                    //! Lägga till en funktion som delar på strängarna vid "," så dom får plats i korten
 
                     // const card = document.createElement('div')
                     // const countryInfo = document.createElement('p')
