@@ -73,23 +73,15 @@ async function getAllInfo () {
 
     //* Här skrivs det ut 10st random länder för att slippa ha alla länder direkt när man kommer in
     function randomCountry () {
-        const randomArr= []
+        const randomArr = []
         for (let i = 0; i < 10; i++) {
             const random = (countryObj.countryArr[Math.floor(Math.random() * countryObj.countryArr.length)])
+
             randomArr.push(random)
 
-            // for (let j = 0; j < randomArr.length; j++) {
-            //     const tempArrObj = {
-            //         name: countryObj.countryArr[j].name,
-            //         capital: countryObj.countryArr[j].capital,
-            //         population: countryObj.countryArr[j].population,
-            //         flag: countryObj.countryArr[j].flag,
-            //     };
-            //     randomArr.push(tempArrObj);
-            //     console.log(tempArrObj);
-            // }
                 console.log(random);
 
+                // console.log(tempArrObj);
 
                     // const card = document.createElement('div')
                     // const countryInfo = document.createElement('p')
@@ -128,3 +120,7 @@ getAllInfo()
 //Dela upp i kontineter
 // Göra en sökfuntion som tar antinge stad eller land
 // en sökfuntion som tar upp vilka läner som gränsar till landet men som oxå skriver ut hela namnet inte förkortningen på de
+
+
+
+
