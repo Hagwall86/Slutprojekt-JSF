@@ -25,7 +25,7 @@ const allInfo = "https://restcountries.com/v3.1/all"
 
 
 //? Detta ska vara söklänken som skickar in ett namn från en Lista? hmmmmmmmmm
-const allNames = "https://restcountries.com/v3.1/name/"    /*Sök*/
+const allNames = "https://restcountries.com/v3.1/name"    /*Sök*/
 
 const allCapital = ""
 const container = document.querySelector('.theMain')!
@@ -66,37 +66,54 @@ async function getAllInfo () {
             name: allData[i].name.common,
             capital: allData[i].capital,
             population: allData[i].population,
-            flag: allData[i].flags.svg,
+            flag: allData[i].flags.png,
         };
         countryObj.countryArr.push(tempObj);
     }
 
     //* Här skrivs det ut 10st random länder för att slippa ha alla länder direkt när man kommer in
     function randomCountry () {
-
+        const randomArr= []
         for (let i = 0; i < 10; i++) {
-            const random = (countryObj.countryArr[Math.floor(Math.random() * countryObj.countryArr.length)].name)
-            for (let j = 0; j < countryObj.countryArr.length; j++) {
-                if (random == countryObj.countryArr[j].name) {
-                    const card = document.createElement('div')
-                    const countryInfo = document.createElement('p')
-                    const flag = document.createElement('img')
-                    countryInfo.innerHTML = `Name: ${random} <br/> Capital: ${countryObj.countryArr[j].capital}`
-                    // countryInfo.innerHTML = countryObj.countryArr[j].capital
-                    flag.src = countryObj.countryArr[j].flag
-                    container.append(card)
-                    card.append(flag, countryInfo)
-                }else {console.log("neeej");
-                }
+            const random = (countryObj.countryArr[Math.floor(Math.random() * countryObj.countryArr.length)])
+            randomArr.push(random)
+
+            // for (let j = 0; j < randomArr.length; j++) {
+            //     const tempArrObj = {
+            //         name: countryObj.countryArr[j].name,
+            //         capital: countryObj.countryArr[j].capital,
+            //         population: countryObj.countryArr[j].population,
+            //         flag: countryObj.countryArr[j].flag,
+            //     };
+            //     randomArr.push(tempArrObj);
+            //     console.log(tempArrObj);
+            // }
+                console.log(random);
+
+
+                    // const card = document.createElement('div')
+                    // const countryInfo = document.createElement('p')
+                    // const flag = document.createElement('img')
+                    // countryInfo.innerHTML = `Name: ${random} <br/> Capital: ${countryObj.countryArr[j].capital}`
+                    // // countryInfo.innerHTML = countryObj.countryArr[j].capital
+                    // flag.src = countryObj.countryArr[j].flag
+                    // container.append(card)
+                    // card.append(flag, countryInfo)
             }
         }
-    }
     randomCountry()
 }
 
 getAllInfo()
 
+// for loop med 10 varv random index siffra
+// lägg allt i en array på vilken plats dden har i objektet och tar hela den o stoppa in i arrayen
+// skapa array med 10 unika siffror
+// array index
+// sök och ta ut all info som finns på index som
 
+
+// ny array
 
 
 
