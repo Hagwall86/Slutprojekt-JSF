@@ -3,6 +3,9 @@ const kn = document.querySelector("#n")!
 
 
 
+//1 skapa en 
+
+
 // länk till jordens flagga https://www.flagofplanetearth.com/
 //Url: https://images.squarespace-cdn.com/content/v1/5fa6b76b045ef433ae7b252e/1604765875569-MUAEJNXG2NL6E4VEORZ6/Flag_20x30.jpg
 
@@ -73,69 +76,40 @@ async function getAllInfo () {
     //* Här skrivs det ut 10st random länder för att slippa ha alla länder direkt när man kommer in
     function randomCountry () {
         const randomArr: number[] = []
+        let randomIndex=0
+
+        //Loopar igenom countryArryen för att plocka ut 10st random
         for (let i = 0; i < 10; i++) {
-            const random = (countryObj.countryArr[Math.floor(Math.random() * countryObj.countryArr.length)])
-            console.log(countryObj.countryArr.indexOf(random))
-            randomArr.push(countryObj.countryArr.indexOf(random))
-            console.log(randomArr)
-            if (randomArr == countryObj.countryArr[i] ) {
-                console.log("ja");
-                console.log(countryObj.countryArr.indexOf(i));
-                randomArr
-            }else {
-                console.log("nej");
-            }
-            // randomArr.forEach(element => {
-            //     // randomArr.indexOf(i) == countryObj.countryArr.indexOf[i]
-            //     if (randomArr == countryObj.countryArr.indexOf[i]) {
-            //         console.log("ICKE =O");
-            //     }else {
-            //         console.log(countryObj.countryArr.indexOf[i].name);
-            //         console.log("hmm");
-            //     }
-            //     // if (randomArr.indexOf(i) == countryObj.countryArr.indexOf[i] )
-            // });
-            
-            // console.log(random.name);           
-            // randomArr.push(random[i])
-            // console.log(randomArr.length)
-            // console.log(randomArr)
-            // sök efter index från randomArr och hämta ut det indexet i countryArr
-            //! HUR FAN DÅÅÅÅÅÅ!?!?!?!
-            //? if sats med en loop?
-            // for (let j = 0; j < randomArr.length; j++) {
-            //     const randNum = randomArr[j]
-            //         console.log(j)
-            // }
-            // use randomArr.indexOf för att inte använda samma länder
-            // console.log(random[2].name)
-            // console.log(tempArrObj);
-            
-            // ! Lägga till en funktion som delar på strängarna vid "," så dom får plats i korten
-            // const card = document.createElement('div')
-            // const countryInfo = document.createElement('p')
-            // const flag = document.createElement('img')
-            // countryInfo.innerHTML = `Name: ${random} <br/> Capital: ${countryObj.countryArr[j].capital}`
-            // // countryInfo.innerHTML = countryObj.countryArr[j].capital
-            // flag.src = countryObj.countryArr[j].flag
-            // container.append(card)
-            // card.append(flag, countryInfo)
-            
+            //Så länge vi har ett nytt index till randomArr hoppar vi ur whileLoopen och tar fram 
+            //nytt index tills det finns 10st
+            while(true){
+                randomIndex=Math.floor(Math.random() * countryObj.countryArr.length);
+                // console.log();
+                // finns randomIndex redan?
+                if(randomArr.indexOf(randomIndex) === -1)
+                    break
+            }   
+            randomArr.push(randomIndex)
+        } console.log(randomArr)
+
+        for (const i of randomArr) {
+            const card = document.createElement('div')
+            const countryInfo = document.createElement('p')
+            const flag = document.createElement('img')
+            countryInfo.innerHTML = `Name: ${countryObj.countryArr[i].name} <br/> Capital: ${countryObj.countryArr[i].capital}`
+            // countryInfo.innerHTML = countryObj.countryArr[j].capital
+            flag.src = countryObj.countryArr[i].flag
+            container.append(card)
+            card.append(flag, countryInfo)
         }
     }
     randomCountry()
 }
 
+
 getAllInfo()
 
-// for loop med 10 varv random index siffra
-// lägg allt i en array på vilken plats den har i objektet och tar hela den o stoppa in i arrayen
-// skapa array med 10 unika siffror
-// array index
-// sök och ta ut all info som finns på index som
 
-
-// ny array
 
 
 
