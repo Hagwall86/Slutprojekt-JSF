@@ -54,7 +54,6 @@ async function getAllInfo () {
     })
 
     kn.addEventListener("click", (e) => {
-        e.preventDefault()
         container.innerHTML = ""
         console.clear()
         randomCountry()
@@ -76,41 +75,61 @@ async function getAllInfo () {
         const randomArr: number[] = []
         for (let i = 0; i < 10; i++) {
             const random = (countryObj.countryArr[Math.floor(Math.random() * countryObj.countryArr.length)])
-            console.log(countryObj.countryArr.indexOf(random));
-            console.log(random.name);
-
-            randomArr.push(random[i])
-
+            console.log(countryObj.countryArr.indexOf(random))
+            randomArr.push(countryObj.countryArr.indexOf(random))
             console.log(randomArr)
-            // use randomArr.indexOf för att inte använda samma länder
-
-
-
-            // console.log(random[2].name)
-
-
-
-            // console.log(tempArrObj);
-
-                    //! Lägga till en funktion som delar på strängarna vid "," så dom får plats i korten
-
-                    // const card = document.createElement('div')
-                    // const countryInfo = document.createElement('p')
-                    // const flag = document.createElement('img')
-                    // countryInfo.innerHTML = `Name: ${random} <br/> Capital: ${countryObj.countryArr[j].capital}`
-                    // // countryInfo.innerHTML = countryObj.countryArr[j].capital
-                    // flag.src = countryObj.countryArr[j].flag
-                    // container.append(card)
-                    // card.append(flag, countryInfo)
+            if (randomArr == countryObj.countryArr[i] ) {
+                console.log("ja");
+                console.log(countryObj.countryArr.indexOf(i));
+                randomArr
+            }else {
+                console.log("nej");
             }
+            // randomArr.forEach(element => {
+            //     // randomArr.indexOf(i) == countryObj.countryArr.indexOf[i]
+            //     if (randomArr == countryObj.countryArr.indexOf[i]) {
+            //         console.log("ICKE =O");
+            //     }else {
+            //         console.log(countryObj.countryArr.indexOf[i].name);
+            //         console.log("hmm");
+            //     }
+            //     // if (randomArr.indexOf(i) == countryObj.countryArr.indexOf[i] )
+            // });
+            
+            // console.log(random.name);           
+            // randomArr.push(random[i])
+            // console.log(randomArr.length)
+            // console.log(randomArr)
+            // sök efter index från randomArr och hämta ut det indexet i countryArr
+            //! HUR FAN DÅÅÅÅÅÅ!?!?!?!
+            //? if sats med en loop?
+            // for (let j = 0; j < randomArr.length; j++) {
+            //     const randNum = randomArr[j]
+            //         console.log(j)
+            // }
+            // use randomArr.indexOf för att inte använda samma länder
+            // console.log(random[2].name)
+            // console.log(tempArrObj);
+            
+            // ! Lägga till en funktion som delar på strängarna vid "," så dom får plats i korten
+            // const card = document.createElement('div')
+            // const countryInfo = document.createElement('p')
+            // const flag = document.createElement('img')
+            // countryInfo.innerHTML = `Name: ${random} <br/> Capital: ${countryObj.countryArr[j].capital}`
+            // // countryInfo.innerHTML = countryObj.countryArr[j].capital
+            // flag.src = countryObj.countryArr[j].flag
+            // container.append(card)
+            // card.append(flag, countryInfo)
+            
         }
+    }
     randomCountry()
 }
 
 getAllInfo()
 
 // for loop med 10 varv random index siffra
-// lägg allt i en array på vilken plats dden har i objektet och tar hela den o stoppa in i arrayen
+// lägg allt i en array på vilken plats den har i objektet och tar hela den o stoppa in i arrayen
 // skapa array med 10 unika siffror
 // array index
 // sök och ta ut all info som finns på index som
