@@ -155,26 +155,31 @@ searchBtn.addEventListener('click',  (e) => {
         const data = await response.json()
         searchBar.innerHTML = ""
         container.innerHTML = ""
+        console.log()
+        const card = document.createElement("div")
+        const cardInfo = document.createElement("p")
+        const flag = document.createElement("img")
+
         console.log(data[0].name.common)
+        console.log(data[0].capital)
+
+        card.innerHTML = data[0].name.common
+        cardInfo.innerHTML = data[0].capital
+        flag.src = data[0].flag
+        container.append(card)
+        card.append(cardInfo, flag)
+        cardInfo.append(flag)
+        // container.innerHTML = data[0].name.common
+        // container.innerHTML = data[0].capital
+        // container.innerHTML = data[0].flag
         // console.log(data[0].name.common)
-
-
     }
-
-
 getSearchCountry()
 })
 
 
 
-
-
-
-// console.log(countryObj.countryArr);
-
-
 // todo: Denna loopen tar fram alla länder
-
 //Lägga ut namnen på alla i en div
 //Lägga till flaggan
 //Visa upp 10 random länder på start
