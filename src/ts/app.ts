@@ -3,7 +3,11 @@ const kn = document.querySelector("#n")!
 
 
 
-//1 skapa en 
+//! 1 Skapa en sök funktion på namn
+//! 2 Fixa så man delar namnen som inte har mellanrum på ","
+//! 3 Fixa till så favorit funtionen fungerar
+//! 4 ??
+
 
 
 // länk till jordens flagga https://www.flagofplanetearth.com/
@@ -20,6 +24,7 @@ interface countryTemplate {
     flag: string,
     // region: string,
     // area: number,
+    //! ha valuta: number,
 }
 
 //* Hämta länk
@@ -33,6 +38,7 @@ const allNames = "https://restcountries.com/v3.1/name"    /*Sök*/
 const allCapital = ""
 const container = document.querySelector('.theMain')!
 const countrySection = document.createElement('section')
+const favArr: string[] = []
 
 let countryObj: {
     countryArr: countryTemplate[],
@@ -41,20 +47,14 @@ let countryObj: {
 }
 
 
+
 //* Hämtar APIet samt min container i HTML
 async function getAllInfo () {
     const respons = await fetch(allInfo)
     const allData = await respons.json()
 
-    // typa inte upp inkommand data utan gör om det och lägg i en ny array
-
     //*Här sorterar jag namnen i bokstavsordning eftersom dom inte kommer i det från APIet
     //* tar in två namn och om den ena är större än den andre så byter dom plats.
-    countryObj.countryArr.sort(function(a,b) {
-        if (a.name < b.name) return -1
-        if (a.name > b.name) return 1
-        return 0
-    })
 
     kn.addEventListener("click", (e) => {
         container.innerHTML = ""
@@ -71,6 +71,11 @@ async function getAllInfo () {
             flag: allData[i].flags.png,
         };
         countryObj.countryArr.push(tempObj);
+        countryObj.countryArr.sort(function(a,b) {
+            if (a.name < b.name) return -1
+            if (a.name > b.name) return 1
+            return 0
+        })
     }
 
     //* Här skrivs det ut 10st random länder för att slippa ha alla länder direkt när man kommer in
@@ -79,35 +84,69 @@ async function getAllInfo () {
         let randomIndex=0
 
         //Loopar igenom countryArryen för att plocka ut 10st random
-        for (let i = 0; i < 10; i++) {
-            //Så länge vi har ett nytt index till randomArr hoppar vi ur whileLoopen och tar fram 
+        for (let i = 0; i < 250; i++) {
+            //Så länge vi har ett nytt index till randomArr hoppar vi ur whileLoopen och tar fram
             //nytt index tills det finns 10st
             while(true){
                 randomIndex=Math.floor(Math.random() * countryObj.countryArr.length);
-                // console.log();
-                // finns randomIndex redan?
+
+                // finns randomIndex redan? bryt och börja om tills de finns 10st
                 if(randomArr.indexOf(randomIndex) === -1)
                     break
-            }   
+            }
             randomArr.push(randomIndex)
         } console.log(randomArr)
+
+        //Sorterar randomArr i nummer ordning för att få ut de i bokstavsordning
+        randomArr.sort(function(a,b) {
+            if (a < b) return -1
+            if (a > b) return 1
+            return 0
+        })
+        randomArr.push(204)
+        console.log(randomArr);
+        console.log(countryObj.countryArr[204].capital.length)
+
 
         for (const i of randomArr) {
             const card = document.createElement('div')
             const countryInfo = document.createElement('p')
             const flag = document.createElement('img')
+            const favButton = document.createElement('button')
+
+
+            favButton.innerText = 'FAV'
+
+            // countryObj.countryArr[i].name.split(',')
+
+            // countryObj.countryArr[i].capital.split(',')
+            // favButton.id = 'fav-btn'
+            countryObj.countryArr[i].capital
             countryInfo.innerHTML = `Name: ${countryObj.countryArr[i].name} <br/> Capital: ${countryObj.countryArr[i].capital}`
-            // countryInfo.innerHTML = countryObj.countryArr[j].capital
             flag.src = countryObj.countryArr[i].flag
+
+
+                countryObj.countryArr[i]
+
             container.append(card)
             card.append(flag, countryInfo)
+            // card.append(favButton)
+
+
+            // favButton.addEventListener('click', function (e) {
+            //     favButton.innerText = 'Added'
+            //     console.log();
+
+            //     favArr.push()
+            // })
+
         }
     }
     randomCountry()
 }
 
-
 getAllInfo()
+
 
 
 

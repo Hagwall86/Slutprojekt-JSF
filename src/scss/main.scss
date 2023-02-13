@@ -11,10 +11,11 @@ main {
 div {
     display: flex;
     justify-content: center;
+    max-height: fit-content;
     border: 3px solid red;
     margin: .3em;
     padding: 0.3em;
-    max-height: 30vw;
+    // max-height: 30vw;
 }
 
 img {
