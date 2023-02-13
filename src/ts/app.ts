@@ -29,13 +29,13 @@ interface countryTemplate {
 
 //* Hämta länk
 
-const allInfo = "https://restcountries.com/v3.1/all"
 
 
 //? Detta ska vara söklänken som skickar in ett namn från en Lista? hmmmmmmmmm
-const allName = "https://restcountries.com/v3.1/name/"    /*Sök*/
 
-const allCapital = ""
+const allInfo = "https://restcountries.com/v3.1/all"
+const allName = "https://restcountries.com/v3.1/name/"    /*Sök*/
+const allCapital = ''
 const container = document.querySelector('.theMain')!
 const searchBar = document.querySelector('#search-bar') as HTMLInputElement
 const searchBtn = document.querySelector('#search-btn')!
@@ -56,7 +56,7 @@ async function getAllInfo () {
     //*Här sorterar jag namnen i bokstavsordning eftersom dom inte kommer i det från APIet
     //* tar in två namn och om den ena är större än den andre så byter dom plats.
 
-    kn.addEventListener("click", (e) => {
+    kn.addEventListener("click", () => {
         container.innerHTML = ""
         console.clear()
         randomCountry()
@@ -84,7 +84,7 @@ async function getAllInfo () {
         let randomIndex=0
 
         //Loopar igenom countryArryen för att plocka ut 10st random
-        for (let i = 0; i < 250; i++) {
+        for (let i = 0; i < 5; i++) {
             //Så länge vi har ett nytt index till randomArr hoppar vi ur whileLoopen och tar fram
             //nytt index tills det finns 10st
             while(true){
@@ -103,7 +103,12 @@ async function getAllInfo () {
             if (a > b) return 1
             return 0
         })
-        randomArr.push(204)
+
+        //! Problembarnen! Dom går sönder för mycket för att va med
+        // randomArr.push(204)
+        // randomArr.push(185)
+
+
         console.log(randomArr);
         console.log(countryObj.countryArr[204].capital.length)
 
@@ -125,14 +130,10 @@ async function getAllInfo () {
             countryInfo.innerHTML = `Name: ${countryObj.countryArr[i].name} <br/> Capital: ${countryObj.countryArr[i].capital}`
             flag.src = countryObj.countryArr[i].flag
 
-
-                countryObj.countryArr[i]
-
             container.append(card)
             card.append(flag, countryInfo)
+
             // card.append(favButton)
-
-
             // favButton.addEventListener('click', function (e) {
             //     favButton.innerText = 'Added'
             //     console.log();
@@ -147,7 +148,7 @@ async function getAllInfo () {
 
 getAllInfo()
 
-searchBtn.addEventListener('click',  (e) => {
+searchBtn.addEventListener('click',  () => {
 
     async function getSearchCountry() {
         console.log(searchBar.value )
@@ -155,7 +156,6 @@ searchBtn.addEventListener('click',  (e) => {
         const data = await response.json()
         searchBar.innerHTML = ""
         container.innerHTML = ""
-        console.log()
         const card = document.createElement("div")
         const cardInfo = document.createElement("p")
         const flag = document.createElement("img")
@@ -165,14 +165,12 @@ searchBtn.addEventListener('click',  (e) => {
 
         card.innerHTML = data[0].name.common
         cardInfo.innerHTML = data[0].capital
-        flag.src = data[0].flag
+        flag.src = data[0].flags.png
+        console.log(flag);
+
         container.append(card)
         card.append(cardInfo, flag)
         cardInfo.append(flag)
-        // container.innerHTML = data[0].name.common
-        // container.innerHTML = data[0].capital
-        // container.innerHTML = data[0].flag
-        // console.log(data[0].name.common)
     }
 getSearchCountry()
 })
