@@ -33,10 +33,12 @@ const allInfo = "https://restcountries.com/v3.1/all"
 
 
 //? Detta ska vara söklänken som skickar in ett namn från en Lista? hmmmmmmmmm
-const allNames = "https://restcountries.com/v3.1/name"    /*Sök*/
+const allName = "https://restcountries.com/v3.1/name/"    /*Sök*/
 
 const allCapital = ""
 const container = document.querySelector('.theMain')!
+const searchBar = document.querySelector('#search-bar') as HTMLInputElement
+const searchBtn = document.querySelector('#search-btn')!
 const countrySection = document.createElement('section')
 const favArr: string[] = []
 
@@ -45,8 +47,6 @@ let countryObj: {
 } = {
     countryArr: []
 }
-
-
 
 //* Hämtar APIet samt min container i HTML
 async function getAllInfo () {
@@ -146,6 +146,24 @@ async function getAllInfo () {
 }
 
 getAllInfo()
+
+searchBtn.addEventListener('click',  (e) => {
+
+    async function getSearchCountry() {
+        console.log(searchBar.value )
+        const response = await fetch(allName + searchBar.value)
+        const data = await response.json()
+        searchBar.innerHTML = ""
+        container.innerHTML = ""
+        console.log(data[0].name.common)
+        // console.log(data[0].name.common)
+
+
+    }
+
+
+getSearchCountry()
+})
 
 
 
