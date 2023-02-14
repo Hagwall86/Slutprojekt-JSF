@@ -1,20 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="scss/main.scss">
-    <script defer src="ts/app.ts"></script>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="scss/main.scss" />
+        <script defer src="ts/app.ts"></script>
+    </head>
 
-</head>
-
-<body>
-    <button id="n">Knapp</button>
-    <input id="search-bar" type="text" placeholder="Search name of country">
-    <button id="search-btn">Search</button>
-    <main class="theMain">
-    </main>
-</body>
+    <body>
+        <h1>Worlds All Countries</h1>
+        <div class="earthSection">
+            <p>
+                No official flag for planet Earth exists today. A flag like this
+                serves as an important reminder to the citizens of Earth. It is
+                a reminder that we share this planet no matter of national
+                boundaries; that we should take care of each other and the
+                planet we live on.
+            </p>
+            <img id="earthFlag" src="https://images.squarespace-cdn.com/content/v1/5fa6b76b045ef433ae7b252e/1604765875569-MUAEJNXG2NL6E4VEORZ6/Flag_20x30.jpg" alt="Earth flag" />
+        </div>
+        <section>
+            <button id="n">Random</button>
+            <input
+                id="search-bar"
+                type="text"
+                placeholder="Search name of country"
+            />
+            <button id="search-btn">Search</button>
+        </section>
+        <main class="theMain"></main>
+    </body>
 </html>

@@ -1,4 +1,3 @@
-
 const kn = document.querySelector("#n")!
 
 
@@ -29,13 +28,13 @@ interface countryTemplate {
 
 //* Hämta länk
 
+const allInfo = "https://restcountries.com/v3.1/all"
 
 
 //? Detta ska vara söklänken som skickar in ett namn från en Lista? hmmmmmmmmm
-
-const allInfo = "https://restcountries.com/v3.1/all"
 const allName = "https://restcountries.com/v3.1/name/"    /*Sök*/
-const allCapital = ''
+
+const allCapital = ""
 const container = document.querySelector('.theMain')!
 const searchBar = document.querySelector('#search-bar') as HTMLInputElement
 const searchBtn = document.querySelector('#search-btn')!
@@ -56,7 +55,7 @@ async function getAllInfo () {
     //*Här sorterar jag namnen i bokstavsordning eftersom dom inte kommer i det från APIet
     //* tar in två namn och om den ena är större än den andre så byter dom plats.
 
-    kn.addEventListener("click", () => {
+    kn.addEventListener("click", (e) => {
         container.innerHTML = ""
         console.clear()
         randomCountry()
@@ -70,6 +69,10 @@ async function getAllInfo () {
             population: allData[i].population,
             flag: allData[i].flags.png,
         };
+        if(allData[i].capital === undefined){
+            allData.splice(i,1)
+            continue
+        }
         countryObj.countryArr.push(tempObj);
         countryObj.countryArr.sort(function(a,b) {
             if (a.name < b.name) return -1
@@ -77,7 +80,7 @@ async function getAllInfo () {
             return 0
         })
     }
-
+    // console.log(allData)
     //* Här skrivs det ut 10st random länder för att slippa ha alla länder direkt när man kommer in
     function randomCountry () {
         const randomArr: number[] = []
@@ -95,7 +98,8 @@ async function getAllInfo () {
                     break
             }
             randomArr.push(randomIndex)
-        } console.log(randomArr)
+        }
+        // console.log(randomArr)
 
         //Sorterar randomArr i nummer ordning för att få ut de i bokstavsordning
         randomArr.sort(function(a,b) {
@@ -103,22 +107,20 @@ async function getAllInfo () {
             if (a > b) return 1
             return 0
         })
-
-        //! Problembarnen! Dom går sönder för mycket för att va med
-        // randomArr.push(204)
-        // randomArr.push(185)
-
-
-        console.log(randomArr);
-        console.log(countryObj.countryArr[204].capital.length)
+            // randomArr.push(204)
+            // randomArr.push(185)
+        // console.log(randomArr);
+        // console.log(countryObj.countryArr[204].capital.length)
 
 
         for (const i of randomArr) {
             const card = document.createElement('div')
-            const countryInfo = document.createElement('p')
+            const countryName = document.createElement('p')
+            const capitalName  = document.createElement('p')
+            const population = document.createElement('p')
             const flag = document.createElement('img')
             const favButton = document.createElement('button')
-
+            flag.className = 'imgFlags'
 
             favButton.innerText = 'FAV'
 
@@ -127,52 +129,83 @@ async function getAllInfo () {
             // countryObj.countryArr[i].capital.split(',')
             // favButton.id = 'fav-btn'
             countryObj.countryArr[i].capital
-            countryInfo.innerHTML = `Name: ${countryObj.countryArr[i].name} <br/> Capital: ${countryObj.countryArr[i].capital}`
+            countryName.innerHTML = `Name: ${countryObj.countryArr[i].name}`
+            population.innerHTML = `Population: ${countryObj.countryArr[i].population}`
+            capitalName.innerHTML = `Capital: ${countryObj.countryArr[i].capital}`
+            // if(countryObj.countryArr[i].capital === undefined){
+            //     randomArr.splice(i,1)
+            //     continue
+            // }
+            // console.log(countryObj.countryArr[i].capital.length)
+            if(countryObj.countryArr[i].capital.length > 1){
+                capitalName.innerHTML = `Capital: ${countryObj.countryArr[i].capital[0]}<br>${countryObj.countryArr[i].capital[1]}<br>${countryObj.countryArr[i].capital[2]}`
+            }
             flag.src = countryObj.countryArr[i].flag
 
+
+            countryObj.countryArr[i]
+
             container.append(card)
-            card.append(flag, countryInfo)
-
+            card.append(flag, countryName, capitalName, population)
             // card.append(favButton)
+
+
             // favButton.addEventListener('click', function (e) {
-            //     favButton.innerText = 'Added'
-            //     console.log();
+                //     favButton.innerText = 'Added'
+                //     console.log();
 
-            //     favArr.push()
-            // })
+                //     favArr.push()
+                // })
 
+            }
+            console.log(randomArr.length)
         }
+        randomCountry()
     }
-    randomCountry()
-}
 
 getAllInfo()
 
-searchBtn.addEventListener('click',  () => {
+
+//* Sök funktion som söker efter en bokstav eller ett ord i ett namn
+searchBtn.addEventListener('click',  (e) => {
+
+
+
+
+
 
     async function getSearchCountry() {
-        console.log(searchBar.value )
-        const response = await fetch(allName + searchBar.value)
-        const data = await response.json()
-        searchBar.innerHTML = ""
-        container.innerHTML = ""
-        const card = document.createElement("div")
-        const cardInfo = document.createElement("p")
-        const flag = document.createElement("img")
+        try {
+            const response = await fetch(allName + searchBar.value)
+            console.log(searchBar.value )
+            const data = await response.json()
 
-        console.log(data[0].name.common)
-        console.log(data[0].capital)
+            searchBar.value = ""
+            container.innerHTML = ""
+            for(let i = 0; i < data.length; i++) {
 
-        card.innerHTML = data[0].name.common
-        cardInfo.innerHTML = data[0].capital
-        flag.src = data[0].flags.png
-        console.log(flag);
+                const card = document.createElement("div")
+                const cardInfo = document.createElement("p")
+                const flag = document.createElement("img")
 
-        container.append(card)
-        card.append(cardInfo, flag)
-        cardInfo.append(flag)
+                console.log(data[i].name.common)
+                console.log(data[i].capital)
+
+                card.innerHTML = `Name: ${data[i].name.common}<br/> Official: ${data[i].name.official}`
+                cardInfo.innerHTML = `Capital: ${data[i].capital}`
+                flag.src = data[i].flags.png
+                container.append(card)
+                card.append(cardInfo, flag)
+                cardInfo.append(flag)
+            }
+        } catch (error) {
+            console.log(`ERROR: ${Error}`);
+        }
+
+
+
     }
-getSearchCountry()
+    getSearchCountry()
 })
 
 
@@ -184,7 +217,4 @@ getSearchCountry()
 //Dela upp i kontineter
 // Göra en sökfuntion som tar antinge stad eller land
 // en sökfuntion som tar upp vilka läner som gränsar till landet men som oxå skriver ut hela namnet inte förkortningen på de
-
-
-
 
