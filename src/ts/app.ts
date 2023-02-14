@@ -34,10 +34,12 @@ const allInfo = "https://restcountries.com/v3.1/all"
 //? Detta ska vara söklänken som skickar in ett namn från en Lista? hmmmmmmmmm
 const allName = "https://restcountries.com/v3.1/name/"    /*Sök*/
 
-const allCapital = ""
+const allRegion = "https://restcountries.com/v3.1/region/"
 const container = document.querySelector('.theMain')!
 const searchBar = document.querySelector('#search-bar') as HTMLInputElement
 const searchBtn = document.querySelector('#search-btn')!
+const viewRegions = document.querySelector('#show-all-regions') as HTMLSelectElement
+
 const countrySection = document.createElement('section')
 const favArr: string[] = []
 
@@ -167,12 +169,7 @@ getAllInfo()
 
 
 //* Sök funktion som söker efter en bokstav eller ett ord i ett namn
-searchBtn.addEventListener('click',  (e) => {
-
-
-
-
-
+searchBtn.addEventListener('click',  () => {
 
     async function getSearchCountry() {
         try {
@@ -209,12 +206,21 @@ searchBtn.addEventListener('click',  (e) => {
 })
 
 
+viewRegions.addEventListener('change', () => {
+    async function fetchRegions() {
+        const response = await fetch(allRegion + viewRegions.value)
+        const data = await response.json()
+
+
+    }
+
+    fetchRegions()
+})
+
 
 // todo: Denna loopen tar fram alla länder
-//Lägga ut namnen på alla i en div
-//Lägga till flaggan
-//Visa upp 10 random länder på start
+
+
 //Dela upp i kontineter
-// Göra en sökfuntion som tar antinge stad eller land
-// en sökfuntion som tar upp vilka läner som gränsar till landet men som oxå skriver ut hela namnet inte förkortningen på de
+
 
