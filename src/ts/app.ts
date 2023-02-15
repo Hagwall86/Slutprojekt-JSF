@@ -70,7 +70,7 @@ async function getAllInfo () {
             capital: allData[i].capital,
             population: allData[i].population,
             flag: allData[i].flags.png,
-        };
+        }
         if(allData[i].capital === undefined){
             allData.splice(i,1)
             continue
@@ -126,19 +126,11 @@ async function getAllInfo () {
 
             favButton.innerText = 'FAV'
 
-            // countryObj.countryArr[i].name.split(',')
-
-            // countryObj.countryArr[i].capital.split(',')
-            // favButton.id = 'fav-btn'
             countryObj.countryArr[i].capital
             countryName.innerHTML = `Name: ${countryObj.countryArr[i].name}`
             population.innerHTML = `Population: ${countryObj.countryArr[i].population}`
             capitalName.innerHTML = `Capital: ${countryObj.countryArr[i].capital}`
-            // if(countryObj.countryArr[i].capital === undefined){
-            //     randomArr.splice(i,1)
-            //     continue
-            // }
-            // console.log(countryObj.countryArr[i].capital.length)
+
             if(countryObj.countryArr[i].capital.length > 1){
                 capitalName.innerHTML = `Capital: ${countryObj.countryArr[i].capital[0]}<br>${countryObj.countryArr[i].capital[1]}<br>${countryObj.countryArr[i].capital[2]}`
             }
@@ -149,18 +141,7 @@ async function getAllInfo () {
 
             container.append(card)
             card.append(flag, countryName, capitalName, population)
-            // card.append(favButton)
-
-
-            // favButton.addEventListener('click', function (e) {
-                //     favButton.innerText = 'Added'
-                //     console.log();
-
-                //     favArr.push()
-                // })
-
             }
-            console.log(randomArr.length)
         }
         randomCountry()
     }
@@ -205,18 +186,55 @@ searchBtn.addEventListener('click',  () => {
     getSearchCountry()
 })
 
+let regionArray: countryTemplate[] = []
 
 viewRegions.addEventListener('change', () => {
+    container.innerHTML = ""
     async function fetchRegions() {
         const response = await fetch(allRegion + viewRegions.value)
         const data = await response.json()
 
+        for (let i = 0; i < data.length; i++) {
 
+            const tempRegionObj = {
+                name: data[i].name.common,
+                capital: data[i].capital,
+                population: data[i].population,
+                flag: data[i].flags.png,
+            }
+
+
+            regionArray.push(tempRegionObj)
+            // console.log(population)
+            // console.log(regionArray)
+        }
+        printRegions()
+        // console.log(regionArray[0])
+        // console.log(regionArray[1])
+        // console.log(regionArray[2])
     }
+
 
     fetchRegions()
 })
 
+function printRegions() {
+
+    console.log(regionArray[2])
+
+    for (let i = 0; i < regionArray.length; i++) {
+        const cards = document.createElement("div")
+        const cardInfo = document.createElement("p")
+        const cardFlag = document.createElement("img")
+        cards.innerHTML = regionArray[i].name
+        cardInfo.innerHTML = regionArray[i].capital
+        cardFlag.src = regionArray[i].flag
+        container.append(cards)
+        cards.append(cardInfo, cardFlag)
+
+    }
+    regionArray = []
+}
 
 // todo: Denna loopen tar fram alla länder
 
