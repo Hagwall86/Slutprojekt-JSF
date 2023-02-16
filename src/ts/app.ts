@@ -29,12 +29,9 @@ interface countryTemplate {
 //* Hämta länk
 
 const allInfo = "https://restcountries.com/v3.1/all"
-
-
-//? Detta ska vara söklänken som skickar in ett namn från en Lista? hmmmmmmmmm
 const allName = "https://restcountries.com/v3.1/name/"    /*Sök*/
-
 const allRegion = "https://restcountries.com/v3.1/region/"
+
 const container = document.querySelector('.theMain')!
 const searchBar = document.querySelector('#search-bar') as HTMLInputElement
 const searchBtn = document.querySelector('#search-btn')!
@@ -43,6 +40,8 @@ const viewRegions = document.querySelector('#show-all-regions') as HTMLSelectEle
 const countrySection = document.createElement('section')
 const favArr: string[] = []
 
+
+// Här läggs allInfo datan som väljs ut från tempObj.
 let countryObj: {
     countryArr: countryTemplate[],
 } = {
@@ -69,12 +68,15 @@ async function getAllInfo () {
             name: allData[i].name.common,
             capital: allData[i].capital,
             population: allData[i].population,
+            // Använder .png för vissa svg filer är sönder dom visasr men dom "finns inte"
             flag: allData[i].flags.png,
         }
         if(allData[i].capital === undefined){
             allData.splice(i,1)
             continue
         }
+
+        //pushar in det i countryArr och sorteras i bokstavsorning
         countryObj.countryArr.push(tempObj);
         countryObj.countryArr.sort(function(a,b) {
             if (a.name < b.name) return -1
@@ -83,7 +85,7 @@ async function getAllInfo () {
         })
     }
 
-    // console.log(allData)
+
     //* Här skrivs det ut 10st random länder för att slippa ha alla länder direkt när man kommer in
     function randomCountry () {
         const randomArr: number[] = []
@@ -102,19 +104,12 @@ async function getAllInfo () {
             }
             randomArr.push(randomIndex)
         }
-        // console.log(randomArr)
-
         //Sorterar randomArr i nummer ordning för att få ut de i bokstavsordning
         randomArr.sort(function(a,b) {
             if (a < b) return -1
             if (a > b) return 1
             return 0
         })
-            // randomArr.push(204)
-            // randomArr.push(185)
-        // console.log(randomArr);
-        // console.log(countryObj.countryArr[204].capital.length)
-
 
         for (const i of randomArr) {
             const card = document.createElement('div')
@@ -137,7 +132,6 @@ async function getAllInfo () {
             }
             flag.src = countryObj.countryArr[i].flag
 
-
             countryObj.countryArr[i]
 
             container.append(card)
@@ -146,7 +140,6 @@ async function getAllInfo () {
         }
         randomCountry()
     }
-
 getAllInfo()
 
 
@@ -163,22 +156,32 @@ searchBtn.addEventListener('click',  () => {
             container.innerHTML = ""
             for(let i = 0; i < data.length; i++) {
 
-                const card = document.createElement("div")
-                const cardInfo = document.createElement("p")
-                const flag = document.createElement("img")
+                const card = document.createElement('div')
+                const countryName = document.createElement('p')
+                const capitalName  = document.createElement('p')
+                const population = document.createElement('p')
+                const flag = document.createElement('img')
+                // const card = document.createElement("div")
+                // const cardInfo = document.createElement("p")
+                // const flag = document.createElement("img")
 
                 console.log(data[i].name.common)
                 console.log(data[i].capital)
-
-                card.innerHTML = `Name: ${data[i].name.common}<br/> Official: ${data[i].name.official}`
-                cardInfo.innerHTML = `Capital: ${data[i].capital}`
+                countryName.innerHTML = `Name: ${data[i].name.common}`
+                population.innerHTML = `Population: ${data[i].population}`
+                capitalName.innerHTML = `Capital: ${data[i].capital}`
+                flag.className = 'imgFlags'
                 flag.src = data[i].flags.png
+
+                // card.innerHTML = `Name: ${data[i].name.common}<br/> Official: ${data[i].name.official}`
+                // cardInfo.innerHTML = `Capital: ${data[i].capital}`
+                // flag.src = data[i].flags.png
                 container.append(card)
-                card.append(cardInfo, flag)
-                cardInfo.append(flag)
+                card.append(flag, countryName, capitalName, population)
             }
         } catch (error) {
-            console.log(`ERROR: ${Error}`);
+            // console.log(`ERROR: ${Error}`);
+            alert(error.message)
         }
     }
     getSearchCountry()
@@ -190,10 +193,6 @@ viewRegions.addEventListener('change', () => {
     container.innerHTML = ""
 
     if (viewRegions.value == 'all') {
-        // countryName.innerHTML = `Name: ${countryObj.countryArr[i].name}`
-        // population.innerHTML = `Population: ${countryObj.countryArr[i].population}`
-        // capitalName.innerHTML = `Capital: ${countryObj.countryArr[i].capital}`
-        console.log("Hej");
         for (let i = 0; i < countryObj.countryArr.length; i++) {
             const tempAllObj = {
                 name: countryObj.countryArr[i].name,
@@ -202,45 +201,49 @@ viewRegions.addEventListener('change', () => {
                 flag: countryObj.countryArr[i].flag,
             }
             regionArray.push(tempAllObj)
-
             printRegions()
         }
-
     }else  {
-        async function fetchRegions() {
-            const response = await fetch(allRegion + viewRegions.value)
-            const data = await response.json()
-
-            for (let i = 0; i < data.length; i++) {
-                const tempRegionObj = {
-                    name: data[i].name.common,
-                    capital: data[i].capital,
-                    population: data[i].population,
-                    flag: data[i].flags.png,
-                }
-                regionArray.push(tempRegionObj)
-            }
-            printRegions()
-        }
         fetchRegions()
     }
-
 })
 
-function printRegions() {
 
+
+async function fetchRegions() {
+    const response = await fetch(allRegion + viewRegions.value)
+    const data = await response.json()
+
+    for (let i = 0; i < data.length; i++) {
+        const tempRegionObj = {
+            name: data[i].name.common,
+            capital: data[i].capital,
+            population: data[i].population,
+            flag: data[i].flags.png,
+        }
+        regionArray.push(tempRegionObj)
+    }
+    printRegions()
+}
+
+function printRegions() {
+    console.log(regionArray.length);
     for (let i = 0; i < regionArray.length; i++) {
         const cards = document.createElement("div")
-        const cardInfo = document.createElement("p")
+        const countryName = document.createElement("p")
+        const capitalName = document.createElement("p")
+        const population = document.createElement("p")
         const cardFlag = document.createElement("img")
-        cards.innerHTML = regionArray[i].name
-        cardInfo.innerHTML = regionArray[i].capital
+        const counter = document.createElement("a")
+
+        countryName.innerHTML = `Name: ${regionArray[i].name}`
+        population.innerHTML = `Population: ${regionArray[i].population}`
+        capitalName.innerHTML = `Capital: ${regionArray[i].capital}`
+        counter.innerHTML = regionArray.length.toString()
         cardFlag.src = regionArray[i].flag
         container.append(cards)
-        cards.append(cardInfo, cardFlag)
-
+        cards.append(cardFlag, countryName, capitalName, population)
     }
-    console.log(regionArray.length);
     regionArray = []
 }
 
