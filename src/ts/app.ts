@@ -151,20 +151,15 @@ searchBtn.addEventListener('click',  () => {
             const response = await fetch(allName + searchBar.value)
             console.log(searchBar.value )
             const data = await response.json()
-
             searchBar.value = ""
             container.innerHTML = ""
+            console.log(response.status);
             for(let i = 0; i < data.length; i++) {
-
                 const card = document.createElement('div')
                 const countryName = document.createElement('p')
                 const capitalName  = document.createElement('p')
                 const population = document.createElement('p')
                 const flag = document.createElement('img')
-                // const card = document.createElement("div")
-                // const cardInfo = document.createElement("p")
-                // const flag = document.createElement("img")
-
                 console.log(data[i].name.common)
                 console.log(data[i].capital)
                 countryName.innerHTML = `Name: ${data[i].name.common}`
@@ -179,12 +174,17 @@ searchBtn.addEventListener('click',  () => {
                 container.append(card)
                 card.append(flag, countryName, capitalName, population)
             }
-        } catch (error) {
-            // console.log(`ERROR: ${Error}`);
-            alert(error.message)
-        }
-    }
-    getSearchCountry()
+            } catch (error) {
+                const errorMsg = document.createElement('p')
+                console.log("heheeheh");
+                errorMsg.innerHTML = `${searchBar.value} Is not in the database check yout spelling and try again`
+                container.append(errorMsg)
+            }
+                // const card = document.createElement("div")
+                // const cardInfo = document.createElement("p")
+                // const flag = document.createElement("img")
+            }
+            getSearchCountry()
 })
 
 let regionArray: countryTemplate[] = []
